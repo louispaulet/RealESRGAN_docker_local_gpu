@@ -20,24 +20,19 @@ RUN pip install \
     "ipywidgets>=7,<8" \
     jupyter-dash
 
+RUN git clone https://github.com/xinntao/Real-ESRGAN.git
+WORKDIR ./Real-ESRGAN
 
 # Install basicsr - https://github.com/xinntao/BasicSR
 # We use BasicSR for both training and inference
 RUN pip install basicsr
 
-# Install facexlib - https://github.com/xinntao/facexlib
-# We use face detection and face restoration helper in the facexlib package
+# facexlib and gfpgan are for face enhancement
 RUN pip install facexlib
+RUN pip install gfpgan
 
-RUN pwd
 RUN pip install -r requirements.txt
 RUN python setup.py develop
-
-# If you want to enhance the background (non-face) regions with Real-ESRGAN,
-# you also need to install the realesrgan package
-RUN pip install realesrgan
-
-RUN git clone https://github.com/xinntao/Real-ESRGAN.git
 
 RUN mkdir ../project
 WORKDIR /project
